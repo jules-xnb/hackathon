@@ -1,11 +1,11 @@
-## Projet d'hackathon
-# Installation
+# Projet d'hackathon
+## Installation
 Dans le dossier principal
 ```
 npm run serve
 ```
 
-# Présentation
+## Présentation
 
 - Ajout d'un hash dans une table de hash
 

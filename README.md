@@ -1,6 +1,11 @@
 # Projet d'hackathon
 ## Installation
-Dans le dossier principal
+Dans le dossier pour installer
+```
+git clone
+```
+
+Dans le dossier principal : hackathon
 ```
 npm run serve
 ```

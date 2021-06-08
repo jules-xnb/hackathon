@@ -2,7 +2,7 @@
 ## Installation
 Dans le dossier pour installer
 ```
-git clone
+git clone https://github.com/jules-xnb/hackathon.git
 npm i
 ```
 

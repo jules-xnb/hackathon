@@ -210,7 +210,7 @@ export default {
     verifyHash: async function () {
       this.resetResult()
       this.result5 = await this.contract.methods.verifyHash(this.paramVerifyHash).call()
-      if (this.result4 === true) {
+      if (this.result5 === true) {
         this.result5 = '👍 Your hash is in the hash table'
       } else {
         this.result5 = '🙅‍♂️ Your hash is not in the hash table'

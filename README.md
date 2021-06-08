@@ -3,9 +3,10 @@
 Dans le dossier pour installer
 ```
 git clone
+npm i
 ```
 
-Dans le dossier principal : hackathon
+Dans le dossier client 
 ```
 npm run serve
 ```

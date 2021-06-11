@@ -1,15 +1,15 @@
 <template>
   <div>
     <main>
-      <h1 id="theme">Hackathon</h1>
+      <h1 id="theme" class="hachathonTitle">Hackathon</h1>
         <article>
-          <h1>HashTable</h1>
+          <h1 class="hashtableTitle">HashTable</h1>
           <div>
             <button v-if="!address" v-on:click="loadWeb3();">Connection à Metamask</button>
-            <p><b><i>Statut</i></b> &nbsp; : <span id="status">Connection requise...</span></p>
+            <p class="connection"><b><i>Statut</i></b> &nbsp; : <span id="status">Connection requise...</span></p>
             <div v-if="address">
                 <p>Address : {{ address }}</p>
-                <p>Contract Address : <a href="https://testnet.bscscan.com/address/0xe8a303d1bbd43343fe9f3d6b7fbfe1c3bf6d4c8b" target="_blank">{{ contractAddress }}</a></p>
+                <p>Contract Address : <a class="address" href="https://testnet.bscscan.com/address/0xe8a303d1bbd43343fe9f3d6b7fbfe1c3bf6d4c8b" target="_blank">{{ contractAddress }}</a></p>
             </div>
           </div>
           <div v-if="owner" class="input">
@@ -19,7 +19,7 @@
                 type="text"
                 placeholder="Address to add"
               />
-            <button v-on:click="addAddressToAllowed();">addAddressToAllowed</button>
+            <button v-on:click="addAddressToAllowed();">Add</button>
           </div>
           <div v-if="owner" class="input">
             <input
@@ -28,7 +28,7 @@
                 type="text"
                 placeholder="Address to remove"
               />
-            <button v-on:click="removeAddressToAllowed();">removeAddressToAllowed</button>
+            <button v-on:click="removeAddressToAllowed();">Remove</button>
           </div>
           <div v-if="allowed" class="input">
             <input
@@ -37,7 +37,7 @@
                 type="text"
                 placeholder="Hash to add"
               />
-            <button v-on:click="addHash();">addHash</button>
+            <button v-on:click="addHash();">Add</button>
           </div>
           <div class="input">
             <input
@@ -46,7 +46,7 @@
                 type="text"
                 placeholder="Address to get"
               />
-            <button v-on:click="getAddressAllowed();">checkIfAddressIsAllowed</button>
+            <button v-on:click="getAddressAllowed();">Check</button>
           </div>
           <div class="input">
             <input
@@ -55,7 +55,7 @@
                 type="text"
                 placeholder="Hash to verify"
               />
-            <button v-on:click="verifyHash();">verifyHash</button>
+            <button v-on:click="verifyHash();">Verify</button>
           </div>
           <div class="input">
             <input
@@ -64,17 +64,11 @@
                 type="text"
                 placeholder="Index to get"
               />
-            <button v-on:click="getHash();">getHash</button>
+            <button v-on:click="getHash();">Get the hash</button>
           </div>
-          <div><button v-on:click="getHashTableLength();">getHashTableLength</button></div>
+          <div><button v-on:click="getHashTableLength();">Get the length of the table</button></div>
           <div>
-            <p v-if="result1">{{ result1 }}</p>
-            <p v-if="result2">{{ result2 }}</p>
-            <p v-if="result3">{{ result3 }}</p>
-            <p v-if="result4">{{ result4 }}</p>
-            <p v-if="result5">{{ result5 }}</p>
-            <p v-if="result6">{{ result6 }}</p>
-            <p v-if="result7">{{ result7 }}</p>
+            <p class="resultP" v-if="resultCall">{{ resultCall }}</p>
           </div>
           <div>
             <div v-if="noweb3">
@@ -107,13 +101,7 @@ export default {
       owner: undefined,
       allowed: undefined,
       result: undefined,
-      result1: undefined,
-      result2: undefined,
-      result3: undefined,
-      result4: undefined,
-      result5: undefined,
-      result6: undefined,
-      result7: undefined
+      resultCall: undefined
     }
   },
   methods: {
@@ -163,55 +151,55 @@ export default {
     },
     addAddressToAllowed: async function () {
       this.resetResult()
-      this.result1 = await this.contract.methods.addAddressToAllowed(this.paramAddAddressToAllowed).send({
+      this.resultCall = await this.contract.methods.addAddressToAllowed(this.paramAddAddressToAllowed).send({
         from: this.address,
         to: this.contractAddress
       })
-      this.result1 = 'Address added ➡️ Transaction Hash : ' + this.result1.transactionHash
+      this.resultCall = 'Address added ➡️ Transaction Hash : ' + this.resultCall.transactionHash
     },
     removeAddressToAllowed: async function () {
       this.resetResult()
-      this.result2 = await this.contract.methods.removeAddressToAllowed(this.paramRemoveAddressToAllowed).send({
+      this.resultCall = await this.contract.methods.removeAddressToAllowed(this.paramRemoveAddressToAllowed).send({
         from: this.address,
         to: this.contractAddress
       })
-      this.result2 = 'Address removed ➡️ Transaction Hash : ' + this.result2.transactionHash
+      this.resultCall = 'Address removed ➡️ Transaction Hash : ' + this.resultCall.transactionHash
     },
     addHash: async function () {
       this.resetResult()
-      this.result3 = await this.contract.methods.addHash(this.paramAddHash).send({
+      this.resultCall = await this.contract.methods.addHash(this.paramAddHash).send({
         from: this.address,
         to: this.contractAddress
       })
-      this.result3 = 'Hash added ➡️ Transaction Hash : ' + this.result3.transactionHash
+      this.resultCall = 'Hash added ➡️ Transaction Hash : ' + this.resultCall.transactionHash
     },
     getAddressAllowed: async function () {
       this.resetResult()
-      this.result4 = await this.contract.methods.getAddressAllowed(this.paramGetAddressAllowed).call()
-      if (this.result4 === true) {
-        this.result4 = '✅ Your address is allowed'
+      this.resultCall = await this.contract.methods.getAddressAllowed(this.paramGetAddressAllowed).call()
+      if (this.resultCall === true) {
+        this.resultCall = '✅ Your address is allowed'
       } else {
-        this.result4 = '❌ Your address is not allowed'
+        this.resultCall = '❌ Your address is not allowed'
       }
     },
     verifyHash: async function () {
       this.resetResult()
-      this.result5 = await this.contract.methods.verifyHash(this.paramVerifyHash).call()
-      if (this.result5 === true) {
-        this.result5 = '👍 Your hash is in the hash table'
+      this.resultCall = await this.contract.methods.verifyHash(this.paramVerifyHash).call()
+      if (this.resultCall === true) {
+        this.resultCall = '👍 Your hash is in the hash table'
       } else {
-        this.result5 = '🙅‍♂️ Your hash is not in the hash table'
+        this.resultCall = '🙅‍♂️ Your hash is not in the hash table'
       }
     },
     getHash: async function () {
       this.resetResult()
-      this.result6 = await this.contract.methods.getHash(this.paramGetHash).call()
-      this.result6 = '📜 Hash number ' + this.paramGetHash + ' = ' + this.result6
+      this.resultCall = await this.contract.methods.getHash(this.paramGetHash).call()
+      this.resultCall = '📜 Hash number ' + this.paramGetHash + ' = ' + this.resultCall
     },
     getHashTableLength: async function () {
       this.resetResult()
-      this.result7 = await this.contract.methods.getHashTableLength().call()
-      this.result7 = '📏 Hash Table length is : ' + this.result7
+      this.resultCall = await this.contract.methods.getHashTableLength().call()
+      this.resultCall = '📏 Hash Table length is : ' + this.resultCall
     },
     printOwner: async function (address) {
       if (address === await this.contract.methods.owner.call().call()) {
@@ -222,13 +210,7 @@ export default {
       this.allowed = await this.contract.methods.getAddressAllowed(address).call()
     },
     resetResult: function () {
-      this.result1 = undefined
-      this.result2 = undefined
-      this.result3 = undefined
-      this.result4 = undefined
-      this.result5 = undefined
-      this.result6 = undefined
-      this.result7 = undefined
+      this.resultCalls = undefined
     }
   }
 }
